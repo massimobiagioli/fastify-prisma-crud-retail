@@ -1,0 +1,7 @@
+{
+    "type": "array",
+    "$id": "schema:team:list:response", 
+    "items": {
+        "$ref": "schema:team"
+    }
+}

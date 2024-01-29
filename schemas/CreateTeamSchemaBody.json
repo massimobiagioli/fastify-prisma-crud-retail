@@ -1,0 +1,13 @@
+{
+    "type": "object",
+    "$id": "schema:team:create:body",
+    "required": ["name"],
+    "additionalProperties": false,
+    "properties": {
+        "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255
+        }
+    }
+}
