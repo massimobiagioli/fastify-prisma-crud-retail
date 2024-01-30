@@ -19,15 +19,24 @@ export default async function (fastify, opts) {
     url: '/:id',
     schema: {
       response: {
-        200: fastify.getSchema('schema:team')
+        200: fastify.getSchema('schema:team'),
+        404: {
+          type: 'null'
+        }        
       }
     },
     handler: async function (request, reply) {
-      return await prisma.team.findUnique({
+      const team = await prisma.team.findUnique({
         where: {
           id: parseInt(request.params.id)
         }
       })
+
+      if (!team) {
+        return reply.notFound()
+      }
+
+      return team
     }
   })
 
@@ -57,7 +66,7 @@ export default async function (fastify, opts) {
     schema: {
       body: fastify.getSchema('schema:team:update:body'),
       response: {
-        200: fastify.getSchema('schema:team')
+        200: fastify.getSchema('schema:team')        
       }
     },
     handler: async function (request, reply) {

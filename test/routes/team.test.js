@@ -26,6 +26,16 @@ test('read team by id', async (t) => {
   assert.equal(data.name, 'Test Team 1')
 })
 
+test('read team by id not found', async (t) => {
+  const app = await build(t)
+
+  const res = await app.inject({
+    url: '/team/999'
+  })
+
+  assert.equal(res.statusCode, 404)
+})
+
 test('create team', async (t) => {
   const app = await build(t)
 
@@ -69,6 +79,20 @@ test('update team', async (t) => {
   assert.equal(updated.name, 'Updated Team')
 })
 
+test('update team not found', async (t) => {
+  const app = await build(t)
+
+  const res = await app.inject({
+    method: 'PUT',
+    url: '/team/999',
+    payload: {
+      name: 'Updated Team'
+    }
+  })
+
+  assert.equal(res.statusCode, 500)
+})
+
 test('delete team', async (t) => {
   const app = await build(t)
 
@@ -88,4 +112,15 @@ test('delete team', async (t) => {
   })
 
   assert.equal(resDelete.statusCode, 204)
+})
+
+test('delete team not found', async (t) => {
+  const app = await build(t)
+
+  const res = await app.inject({
+    method: 'DELETE',
+    url: '/team/999'
+  })
+
+  assert.equal(res.statusCode, 500)
 })
