@@ -8,11 +8,15 @@
     "test": "test"
   },
   "scripts": {
-    "test": "node --test test/**/*.test.js",
+    "test": "npx dotenv -e .env.test -- node --test test/**/*.test.js",
     "start": "fastify start -l info app.js",
     "dev": "fastify start -w -l info -P app.js -debug",
-    "pretest": "standard",
-    "lint": "standard --fix"
+    "pretest": "npm run prisma:init:test",
+    "lint": "standard --fix",
+    "prisma:generate": "npx prisma generate",
+    "prisma:init:test": "npx dotenv -e .env.test -- npx prisma migrate reset --force",
+    "prisma:studio:dev": "npx prisma studio",
+    "prisma:studio:test": "npx dotenv -e .env.test -- npx prisma studio"
   },
   "keywords": [],
   "author": "",
@@ -27,7 +31,17 @@
   },
   "devDependencies": {
     "c8": "^7.13.0",
+    "dotenv": "^16.4.1",
+    "dotenv-cli": "^7.3.0",
     "prisma": "^5.8.1",
     "standard": "^17.0.0"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
+  "standard": {
+    "ignore": [
+      "schemaLoader.js"
+    ]
   }
 }
