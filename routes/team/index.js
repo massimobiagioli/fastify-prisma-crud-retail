@@ -5,6 +5,7 @@ export default async function (fastify, opts) {
     method: 'GET',
     url: '/',
     schema: {
+      tags: ['team'],
       response: {
         200: fastify.getSchema('schema:team:list:response')
       }
@@ -18,11 +19,12 @@ export default async function (fastify, opts) {
     method: 'GET',
     url: '/:id',
     schema: {
+      tags: ['team'],
       response: {
         200: fastify.getSchema('schema:team'),
         404: {
           type: 'null'
-        }        
+        }
       }
     },
     handler: async function (request, reply) {
@@ -44,6 +46,7 @@ export default async function (fastify, opts) {
     method: 'POST',
     url: '/',
     schema: {
+      tags: ['team'],
       body: fastify.getSchema('schema:team:create:body'),
       response: {
         201: fastify.getSchema('schema:team')
@@ -64,9 +67,10 @@ export default async function (fastify, opts) {
     method: 'PUT',
     url: '/:id',
     schema: {
+      tags: ['team'],
       body: fastify.getSchema('schema:team:update:body'),
       response: {
-        200: fastify.getSchema('schema:team')        
+        200: fastify.getSchema('schema:team')
       }
     },
     handler: async function (request, reply) {
@@ -86,6 +90,7 @@ export default async function (fastify, opts) {
     method: 'DELETE',
     url: '/:id',
     schema: {
+      tags: ['team'],
       response: {
         204: {
           type: 'null'
